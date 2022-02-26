@@ -16,16 +16,17 @@ const PizzaForm = () =>{
             pineapple:false
         },
         size:'',
-        otherInstructions: ''
+        specialInstructions: ''
     })
 
     const formChange = e =>{
         const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+        console.log(e.target.checked);
         setForm({...form,[e.target.name]:value});
     }
     const validateName = (name)=>name.length < 2 ? "name must be at least 2 characters" : ''
 
-    const handelSubmit = (e)=>{
+    const handleSubmit = (e)=>{
         form.preventDefault();
         axios.post('https://reqres.in/api/orders',e.target)
     }
@@ -33,8 +34,8 @@ const PizzaForm = () =>{
         <article>
             <div>
             {error && <p>{error}</p>}
-            </div>  
-          <form onSubmit={(a)=>handelSubmit(a)} id='pizza-form'>
+            </div> 
+          <form onSubmit={(a)=>handleSubmit(a)} id='pizza-form'>
             <label>
                 Name:
                 <input type = "text" name = 'name' id ='name-input' value = {form.name}
@@ -49,45 +50,41 @@ const PizzaForm = () =>{
                 <div id="ingredients">
                     <label> Pepperoni
                     <input 
+                    onChange = {formChange}
                     type="checkbox"
                     name="pepperoni"
-                    checked = {form.ingredients.pepperoni}
-                    onChange = {formChange}
                     />
                     </label>
                     <label> Olives
                     <input
+                    onChange = {formChange}
                     type="checkbox"
                     name="olives"
-                    checked = {form.ingredients.olives}
-                    onChange = {formChange}
                     />
                     </label>
                     <label> Ham
                     <input
+                    onChange = {formChange}
                     type="checkbox"
                     name="ham"
-                    checked = {form.ingredients.ham}
-                    onChange = {formChange}
                     />
                     </label>
                     <label> Pineapple
                     <input
+                    onChange = {formChange}
                     type="checkbox"
                     name="pineapple"
-                    checked = {form.ingredients.pineapple}
-                    onChange = {formChange}
                     />
                     </label>
                 </div>
             </label>
             <input
             type="text"
+            name = 'special-text'
             id="special-text"
-            value={form.otherInstructions}
-            onChange={formChange}
+            value={form.specialInstructions}
+            onChange={(e)=>{setForm({...form,specialInstructions:e.target.value})}}
             />
-
                 <input
                 type="submit"
                 id="order-button"
