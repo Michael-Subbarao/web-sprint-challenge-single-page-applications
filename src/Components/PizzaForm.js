@@ -27,7 +27,6 @@ const PizzaForm = () =>{
     const validateName = (name)=>name.length < 2 ? "name must be at least 2 characters" : ''
 
     const handleSubmit = (e)=>{
-        form.preventDefault();
         axios.post('https://reqres.in/api/orders',e.target)
     }
     return(
